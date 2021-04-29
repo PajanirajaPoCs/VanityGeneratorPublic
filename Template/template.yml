@@ -1,0 +1,98 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Resources:
+  ContactFlowFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: ContactFlowFunction-dev
+      Handler: lambda_function.lambda_handler
+      Role: !GetAtt lambdaIAMRole.Arn
+      CodeUri: ../ContactFlowFunction/
+      Runtime: python3.8
+      Timeout: 30
+      MemorySize: 128
+      Environment:
+        Variables:
+          Region: us-east-1
+          AccountNumber: 905055468705
+          instanceId: '39c53e48-d870-4a96-9c9a-238cc8b45f36'
+          contactFlowName: vanityContacflow-dev
+          Dependency: !GetAtt vanityGenerator.Arn
+    DeletionPolicy: Delete
+		
+  TriggerLambdaFunction:
+    Type: Custom::LammdaCallout
+    Properties:
+      ServiceToken: !GetAtt ContactFlowFunction.Arn
+    DeletionPolicy: Delete
+	
+  lambdaIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+            - 'sts:AssumeRole'
+      Path: /    
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/AmazonConnect_FullAccess
+    DeletionPolicy: Delete
+				
+  vanityGenerator:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: vanityGenerator-dev
+      Handler: lambda_function.lambda_handler
+      Role: !GetAtt lambdaIAMRole.Arn
+      CodeUri: ../vanityGenerator/
+      Runtime: python3.8
+      Timeout: 840
+      Memory: 512
+    DeletionPolicy: Delete
+
+  getLatestVanities:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: getLatestVanities-dev
+      Handler: lambda_function.lambda_handler
+      Role: !GetAtt lambdaIAMRole.Arn
+      CodeUri: ../getLatestVanities/
+      Runtime: python3.8
+      Timeout: 60
+      Memory: 128
+    DeletionPolicy: Delete				
+
+  callerVanity:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: callerVanity-dev
+      AttributeDefinitions:
+      - AttributeName: callerID
+        AttributeType: N
+      KeySchema:
+      - AttributeName: callerID
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 
+          0
+        WriteCapacityUnits:
+          0
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: False
+      SSESpecification:
+        SSEEnabled: False
+      BillingMode: PAY_PER_REQUEST
+    DeletionPolicy: Delete 
+
+Outputs:
+  Results:
+    Description: TriggerLambdaFunction
+    Value: !GetAtt TriggerLambdaFunction.Message
+		
