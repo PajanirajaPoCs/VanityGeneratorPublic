@@ -1,0 +1,201 @@
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  
+  article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+  }
+  
+  body {
+      margin: 0;
+      font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-size: smaller;
+      font-weight: 400;
+      line-height: 1;
+      color: #000000;
+      text-align: left;
+      background-color: #fff;
+  }
+  table {
+    border-collapse: collapse !important;
+  }
+  
+  th {
+    text-align: inherit;
+    text-align: -webkit-match-parent;
+  }
+  
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #e3e6f0;
+  }
+  
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #e3e6f0;
+  }
+  
+  .table tbody + tbody {
+    border-top: 2px solid #e3e6f0;
+  }
+  
+  .table-sm th,
+  .table-sm td {
+    padding: 0.3rem;
+  }
+  
+  .table-bordered th,table.dataTable thead th,
+  .table-bordered td {
+    border: 1px solid #e3e6f0 !important;
+  }
+  
+  .dataTables_filter label{
+    color: black;
+  }
+  .dataTables_filter label input{
+    background-color: white;
+  }
+  #callhistory_filter{
+    width: 87% !important;
+  }
+  #callhistory_filter label input{
+    background-color: white;
+  }
+  #claimDetails_filter label input{
+    background-color: white;
+  }
+  #associatesClaimDetails_filter label input{
+    background-color: white;
+  }
+  .dataTables_wrapper .top
+  {
+    position: absolute;
+    margin-top: 2px;
+    width: 108%;
+  }
+  .dataTables_length{
+    padding-top: 10px;
+    margin-left: 10px;
+    width:15%
+  }
+  .dataTables_info {
+    text-align: center;
+    width: 40%;
+    padding-top: 1.4em !important;
+  }
+  .dataTables_paginate.paging_input {
+    width: 50%;
+    padding-top: 1em;
+  }
+  .ellipsis {
+    cursor: pointer;
+  }
+  textarea{
+    resize: none;
+  }
+  .callBackgroundClass, .callBackgroundClass .sorting_1, .callBackgroundClass a{
+    background-color: #5ad672 !important;
+    color: #fff !important;
+  }
+  .sorting:before, table.dataTable>thead .sorting_asc:before, table.dataTable>thead .sorting_desc:before, table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorting_desc_disabled:before{
+    content: "" !important;  
+  }
+  .sorting:before, table.dataTable>thead .sorting:after, table.dataTable>thead .sorting_asc:before, table.dataTable>thead .sorting_asc:after, table.dataTable>thead .sorting_desc:before, table.dataTable>thead .sorting_desc:after, table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorting_asc_disabled:after, table.dataTable>thead .sorting_desc_disabled:before, table.dataTable>thead .sorting_desc_disabled:after {
+    opacity: 1 !important;
+  }
+  /*
+   * Sort styling
+   */
+  table.dataTable thead th {
+    position: relative;
+    background-image: none !important; /* Remove the DataTables bootstrap integration styling */
+  }
+  
+  table.dataTable thead th.sorting:after,
+  table.dataTable thead th.sorting_asc:after,
+  table.dataTable thead th.sorting_desc:after {
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    display: block;
+    font-family: FontAwesome;
+  }
+  
+  table.dataTable thead th.sorting:after {
+    content: "\f0dc";
+    color: #ddd;
+    font-size: 0.8em;
+    padding-top: 0.12em;
+  }
+  table.dataTable thead th.sorting_asc:after {
+    content: "\f0de";
+  }
+  table.dataTable thead th.sorting_desc:after {
+    content: "\f0dd";
+  }
+  
+  div.dataTables_scrollBody table.dataTable thead th.sorting:after,
+  div.dataTables_scrollBody table.dataTable thead th.sorting_asc:after,
+  div.dataTables_scrollBody table.dataTable thead th.sorting_desc:after {
+    content: "";
+  }
+  
+  /* In Bootstrap and Foundation the padding top is a little different from the DataTables stylesheet */
+  table.table thead th.sorting:after,
+  table.table thead th.sorting_asc:after,
+  table.table thead th.sorting_desc:after {
+    top: 8px;
+  }
+  
+  table.dataTable thead tr {
+    background: #607794;
+      color: white;
+  }
+  .bottom {
+    display: flex;
+  }
+  .background {
+    background: #26303b;
+  }
+  .background_white {
+    background-color: #fff;
+  }
+
+  .card .card-header[data-toggle=collapse]::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 1.725rem;
+    line-height: 51px;
+    font-weight: 900;
+    content: '\f0de';
+    font-family: 'FontAwesome';
+    color: #d1d3e2;
+  }
+  .card .card-header[data-toggle=collapse].collapsed::after {
+    content: '\f0dd';
+  }
+  .card-body{
+    padding: 2.5rem
+  }
+  .col-4{
+    text-align: center;
+    padding-top: 2rem;
+    color: black;
+  }
+  .dataTables_wrapper .dataTables_filter {
+    float: right;
+    padding: 9rem;
+    margin-top: -185px;
+    text-align: right;
+}

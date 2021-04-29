@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Latest Record</title>
+    <!-- Custom fonts for this template-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+    <!-- Custom styles for this template-->
+    <link href="main.css" rel="stylesheet">
+    <!-- Bootstrap Dependencies -->   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+    <!-- Page level plugins for Datatable-->
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.22/pagination/input.js"></script>
+
+</head>
+
+<body id="page-top">
+    <div class="col-4 d-flex pb-2">
+        <h2 id="heading"><b>Vanity Details</b></h2>
+    </div> 
+    <div class="card-body">                      
+        <div class="table-responsive">
+            <table class="table table-bordered display nowrap" id="callhistory" style="width:100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th id="number">CallerID</th>
+                        <th id="date">VanityNumber1</th>
+                        <th id="name">VanityNumber2</th>
+                        <th id="date">VanityNumber3</th>
+                        <th id="date">VanityNumber4</th>
+                        <th id="date">VanityNumber5</th>
+                        <th id="date">Last Updated</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div> 
+</body>
+<script>
+    loadData()
+    $('#callhistory').DataTable({ dom: '<"top"f>rt<"bottom"lip><"clear">', scrollY: 200, scrollX: true, lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']], columnDefs: [{ defaultContent: '-', targets: '_all' }] })
+    function loadData() {
+        $.getJSON("https://gs1is7pjrk.execute-api.us-east-1.amazonaws.com/PoC/getdata", function (data) {
+            $('#callhistory').dataTable().fnClearTable()
+            const t = $('#callhistory').DataTable({
+                destroy: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                order: [[6, 'desc']],
+                scrollY: 200,
+                scrollX: true,
+                lengthMenu: [[5,10, 25, 50, -1], [5,10, 25, 50, 'All']],
+                columnDefs: [
+                    {
+                        defaultContent: '-',
+                        targets: '_all'
+                    }
+                ],
+                pagingType: 'input',
+                language: {
+                    zeroRecords: 'No records to display',
+                    oPaginate: {
+                        sNext: '<i class="fa fa-forward"></i>',
+                        sPrevious: '<i class="fa fa-backward"></i>',
+                        sFirst: '<i class="fa fa-step-backward"></i>',
+                        sLast: '<i class="fa fa-step-forward"></i>'
+                    }
+                }
+            }).clear()
+            const obj = data.body
+            
+            const counter = obj
+			
+            for (let i = 0; i < counter.length; i++) {
+                t.row.add([
+                    counter[i].callerID,
+					counter[i].VanityNumberList!= undefined?counter[i].VanityNumberList[0]:"",
+					counter[i].VanityNumberList!= undefined?counter[i].VanityNumberList[1]:"",
+					counter[i].VanityNumberList!= undefined?counter[i].VanityNumberList[2]:"",
+					counter[i].VanityNumberList!= undefined?counter[i].VanityNumberList[3]:"",
+					counter[i].VanityNumberList!= undefined?counter[i].VanityNumberList[4]:"",
+                    counter[i].timestamp,
+                ]).draw()
+            }
+        })
+    }
+</script>
+</html>
